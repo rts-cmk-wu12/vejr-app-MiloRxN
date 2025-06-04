@@ -1,0 +1,37 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use 'sass:color';
+
+.search-form{
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+
+    &__input {
+        border-radius: $border-radius--pill;
+        background: $secondary-background;
+        border: none;
+        padding: $spacing-sm $spacing-md;
+        color: $primary-text;
+    }
+
+    &__input:focus {
+        outline: none;
+        box-shadow: 0 0 0 1px $highlight-color;
+    }
+
+    &__button {
+        color: $button-text;
+        font-weight: 600;
+        background: $button-background;
+        border-radius:  $border-radius--pill;
+        border: none;
+        padding: $spacing-xs $spacing-xs;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+    }
+
+    &__button:hover {
+        background: color.change($button-background, $alpha: 0.8);
+    }
+}

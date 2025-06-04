@@ -2,26 +2,21 @@
 @use './variables' as *;
 
 @mixin media($breakpoint) {
-    @if $breakpoint==mobile {
-        @media (max-width: $mobile) {
-            @content;
-        }
-    }
 
-    @else if $breakpoint==tablet {
-        @media (max-width: $tablet) {
+    @if $breakpoint==tablet {
+        @media (min-width: $tablet) {
             @content;
         }
     }
 
     @else if $breakpoint==desktop {
-        @media (max-width: $desktop) {
+        @media (min-width: $desktop) {
             @content;
         }
     }
 
     @else {
-        @media (max-width: $breakpoint) {
+        @media (min-width: $breakpoint) {
             @content;
         }
     }

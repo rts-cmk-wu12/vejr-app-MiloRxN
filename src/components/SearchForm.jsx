@@ -16,7 +16,7 @@ export default function SearchForm({ query, onQueryChange, onSubmit, loading }) 
                 type="text"
                 placeholder="Enter location..."
                 className="search-form__input"
-                name="location"
+                id="location"
             />
             <button
                 type="submit"

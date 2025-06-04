@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { getGeolocation, getCurrentWeather } from "../lib/api/weather"
+import { getGeolocation, getCurrentWeather, getTodaysForecast } from "../lib/api/weather"
 import WeatherCard from "../components/WeatherCard"
 import SearchForm from "../components/SearchForm"
 
@@ -21,7 +21,7 @@ export default function Index() {
 
         setLoading(true)
 
-        console.log("Fetching geolocation for:", Query)
+        // console.log("Fetching geolocation for:", Query)
         const geoData = await getGeolocation(Query)
 
         if (geoData.error) {
@@ -36,23 +36,27 @@ export default function Index() {
             return
         }
 
-        console.log(`Geolocation returned:`, geoData[0].lat, "and", geoData[0].lon)
+        // console.log(`Geolocation returned:`, geoData[0].lat, "and", geoData[0].lon)
 
         const { lat: latitude, lon: longitude, name: cityName, country } = geoData[0]
-        console.log("Getting weather for coordinates:", latitude, longitude)
+        // console.log("Getting weather for coordinates:", latitude, longitude)
 
         const weather = await getCurrentWeather(latitude, longitude)
-        console.log("Weather response:", weather)
+        // console.log("Weather response:", weather)
 
         if (weather.error) {
             setError(`Weather error: ${weather.error}`)
             return
         }
 
+        const forecasts = await getTodaysForecast(latitude, longitude)
+        // console.log("Forecast Data:", forecasts)
+
         setWeatherData({
             ...weather,
             cityName: cityName,
-            country: country
+            country: country,
+            forecasts: forecasts.list
         })
 
         setLoading(false);
@@ -70,7 +74,7 @@ export default function Index() {
                 />
             </header>
 
-            <main>
+            <main className="main">
                 {!weatherData && !error && !loading && (
                     <p className="placeholder">Weather data will be displayed here.</p>
                 )}
@@ -78,7 +82,7 @@ export default function Index() {
                 {weatherData && <WeatherCard weatherData={weatherData} />}
 
                 {error && (
-                    <p className="error">Error: {error}</p>
+                    <p className="error">{error}</p>
                 )}
             </main>
         </>

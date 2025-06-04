@@ -49,3 +49,40 @@ export async function getCurrentWeather(latitude, longitude) {
 export function getWeatherIcon(code) {
     return `${ICONURL}/img/wn/${code}@2x.png`
 }
+
+/**
+ * getTodaysForecast fetches forecast data and filters it to only return today's forecasts
+ * @async
+ * @function getTodaysForecast
+ * @param {number} latitude - Latitude of the Geolocation.
+ * @param {number} longitude - Longitude of the Geolocation.
+ * @returns {Object} Object containing filtered list of today's forecasts
+ */
+export async function getTodaysForecast(latitude, longitude) {
+    const response = await fetch(`${BASEURL}/data/2.5/forecast?lat=${latitude}&lon=${longitude}&cnt=8&appid=${APIKEY}`)
+    if (!response.ok) {
+        return { error: response.statusText };
+    }
+
+    const data = await response.json();
+
+    if (data && data.list) {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+
+        const todaysForecasts = data.list.filter(forecast => {
+            const forecastDate = new Date(forecast.dt * 1000);
+            return forecastDate >= today && forecastDate < tomorrow;
+        });
+
+        return {
+            ...data,
+            list: todaysForecasts
+        };
+    }
+
+    return data;
+}

@@ -9,3 +9,13 @@
 // Components
 @use './components/WeatherCard.scss' as *;
 @use './components/SearchForm.scss' as *;
+
+// Layout
+@use './layout/header.scss' as *;
+@use './layout/main.scss' as *;
+
+
+.divider{
+    border: 1px solid $secondary-text;
+    height: 2rem;
+}
