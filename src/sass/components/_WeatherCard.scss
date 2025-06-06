@@ -1,0 +1,180 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.weather-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+
+    &__title {
+        margin: 0;
+        text-align: center;
+    }
+
+    &__description {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &-icon {
+            width: 6em;
+        }
+
+        &-temp {
+            font-size: 2em;
+            margin: 0;
+        }
+
+        &-weather {
+            color: rgba($secondary-text, $alpha: 0.8);
+            font-size: 1.2em;
+        }
+
+        &-container {
+            text-align: center;
+
+            div {
+                display: flex;
+                gap: 1rem;
+                color: rgba($secondary-text, $alpha: 0.8);
+            }
+        }
+    }
+
+    &__additional {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: $spacing-md;
+        padding: $spacing-md;
+
+        &-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            place-items: center;
+            gap: $spacing-sm;
+            padding: $spacing-lg;
+            width: 100%;
+            border-radius: $border-radius;
+            background-color: $secondary-background;
+
+            &--large {
+                display: grid;
+                grid-template-columns: 1fr auto 1fr auto 1fr;
+                width: 100%;
+
+                div {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                }
+            }
+
+            @include media(tablet) {
+                max-width: 900px;
+                margin: auto;
+            }
+        }
+
+
+    }
+
+    &__humidity,
+    &__wind,
+    &__feels {
+        &-icon {
+            width: 2em;
+            height: 2em;
+            margin-bottom: .5rem;
+        }
+
+        &-data {
+            font-size: 1.2em;
+            margin: 0;
+        }
+
+        &-type {
+            color: $secondary-text;
+            font-size: 1em;
+        }
+    }
+
+    &__forecasts {
+        margin-top: $spacing-md;
+        padding-inline: $spacing-md;
+
+        &-title {
+            margin-bottom: $spacing-sm;
+            text-align: center;
+        }
+
+
+        &-date {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid $secondary-text;
+
+            p {
+                &:last-child {
+                    text-transform: capitalize;
+                }
+            }
+        }
+
+        &-slider{
+            display: flex;
+            overflow-x: auto;
+            gap: $spacing-md;
+            padding-block: $spacing-lg;
+            scrollbar-width: thin;
+            scrollbar-color: $secondary-text $secondary-background;
+
+            &::-webkit-scrollbar {
+                height: 6px;
+            }
+
+            &::-webkit-scrollbar-track {
+                background: $secondary-background;
+                border-radius: 3px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: $secondary-text;
+                border-radius: 3px;
+            }
+        }
+
+        &-item{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 95px;
+            padding: $spacing-sm;
+            background: $secondary-background;
+            border-radius: $border-radius;
+            text-align: center;
+
+            &:hover {
+                background: rgba($secondary-background, 0.8);
+            }
+
+            &-time {
+                font-size: 0.9em;
+                margin: 0 0 $spacing-xs;
+                color: $secondary-text;
+            }
+
+            &-icon {
+                width: 50px;
+                height: 50px;
+            }
+
+            &-temp {
+                font-size: 1.1em;
+                font-weight: 600;
+                margin: $spacing-xs 0 0;
+            }
+        }
+    }
+}
